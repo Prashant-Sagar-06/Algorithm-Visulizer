@@ -8,39 +8,52 @@
 </head>
 <body>
 
-    <h1>Algorithm Visualizer</h1>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">Algorithm Visualizer</div>
+        <ul class="nav-links">
+            <li><a href="#">Sorting</a></li>
+            <li><a href="#">Searching</a></li>
+            <li><a href="#">Graphs</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
 
-    <!-- Controls Section -->
-    <div class="controls">
+    <!-- MAIN CONTAINER -->
+    <div class="container">
 
-        <!-- Algorithm Dropdown -->
-        <label for="algoSelect">Algorithm:</label>
-        <select id="algoSelect">
-            <option value="bubble">Bubble Sort</option>
-            <option value="merge">Merge Sort</option>
-            <option value="quick">Quick Sort</option>
-            <option value="insertion">Insertion Sort</option>
-        </select>
+        <h2>Select Algorithm & Visualize</h2>
 
-        <!-- Buttons -->
-        <button id="generateBtn">Generate Array</button>
-        <button id="startBtn">Start</button>
+        <!-- Controls -->
+        <div class="controls">
 
-        <!-- Sliders -->
-        <label>
-            Size:
-            <input type="range" id="sizeSlider" min="10" max="150" value="50" />
-        </label>
+            <label for="algoSelect">Algorithm</label>
+            <select id="algoSelect" title="Select algorithm">
+                <option value="bubble">Bubble Sort</option>
+                <option value="merge">Merge Sort</option>
+                <option value="quick">Quick Sort</option>
+                <option value="insertion">Insertion Sort</option>
+            </select>
+            <button id="generateBtn" type="button">Generate Array</button>
+            <button id="startBtn" type="button">Start</button>
+            <button id="startBtn">Start</button>
+            <div class="slider-group">
+                <label for="sizeSlider">Size</label>
+                <input type="range" id="sizeSlider" min="10" max="150" value="50" title="Array size" />
+            </div>
+            </div>
+            <div class="slider-group">
+                <label for="speedSlider">Speed</label>
+                <input type="range" id="speedSlider" min="10" max="300" value="150" title="Animation speed" />
+            </div>
+            </div>
 
-        <label>
-            Speed:
-            <input type="range" id="speedSlider" min="10" max="300" value="150" />
-        </label>
+        </div>
+
+        <!-- Bars -->
+        <div id="bars"></div>
 
     </div>
-
-    <!-- Bars Container -->
-    <div id="bars"></div>
 
     <script type="module" src="script.js"></script>
 </body>

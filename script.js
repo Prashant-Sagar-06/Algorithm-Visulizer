@@ -1,5 +1,7 @@
-import { sleep, highlight, updateHeight } from "./Utils/ui.js";
+import { sleep, highlight, updateHeight , COLORS } from "./utils/ui.js";
 import { bubbleSort } from "./Algorithms/bubbleSort.js";
+import { mergeSort } from "./Algorithms/mergeSort.js";
+
 
 let array = []; // global array
 let arraySize = 50; // default size
@@ -50,16 +52,34 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     generateArray(arraySize);
 });
 
-// Button: Start Sorting (Bubble Sort)
+// Button: Start Sorting 
 document.getElementById("startBtn").addEventListener("click", async () => {
     const algo = document.getElementById("algoSelect").value;
 
+    disableUI(true);
+
     if (algo === "bubble") {
         await bubbleSort(array, speed);
-    } else {
+    }
+    else if (algo === "merge") {
+        await mergeSort(array, speed);
+    }
+    else {
         alert("This algorithm is not implemented yet!");
     }
+
+
+    disableUI(false);
 });
+
+function disableUI(state) {
+    document.getElementById("generateBtn").disabled = state;
+    document.getElementById("startBtn").disabled = state;
+    document.getElementById("sizeSlider").disabled = state;
+    document.getElementById("speedSlider").disabled = state;
+    document.getElementById("algoSelect").disabled = state;
+}
+
 
 // Initial load
 generateArray(arraySize);

@@ -1,33 +1,46 @@
-import { sleep } from "../Utils/ui.js";
+import { sleep, highlight, updateHeight, COLORS } from "../utils/ui.js";
 
 export async function bubbleSort(array, speed) {
     const bars = document.getElementsByClassName("bar");
-
     let n = array.length;
+
     for (let i = 0; i < n - 1; i++) {
 
         for (let j = 0; j < n - i - 1; j++) {
 
-            // highlight bars being compared
-            bars[j].style.background = "red";
-            bars[j + 1].style.background = "red";
+            // Comparing
+            highlight(bars[j], COLORS.COMPARE);
+            highlight(bars[j + 1], COLORS.COMPARE);
 
             await sleep(speed);
 
             if (array[j] > array[j + 1]) {
-                // swap in array
+
+                // Highlight swap
+                highlight(bars[j], COLORS.SWAP);
+                highlight(bars[j + 1], COLORS.SWAP);
+
+                await sleep(speed);
+
                 let temp = array[j];
                 array[j] = array[j + 1];
                 array[j + 1] = temp;
 
-                // update in UI
-                bars[j].style.height = `${array[j]}px`;
-                bars[j + 1].style.height = `${array[j + 1]}px`;
+                updateHeight(bars[j], array[j]);
+                updateHeight(bars[j + 1], array[j + 1]);
+
+                await sleep(speed);
             }
 
-            // revert color back
-            bars[j].style.background = "#4caf50";
-            bars[j + 1].style.background = "#4caf50";
+            // Reset back to default
+            highlight(bars[j], COLORS.DEFAULT);
+            highlight(bars[j + 1], COLORS.DEFAULT);
         }
+
+        // Mark final element of this iteration as sorted
+        highlight(bars[n - i - 1], COLORS.SORTED);
     }
+
+    // mark final bar sorted
+    highlight(bars[0], COLORS.SORTED);
 }
