@@ -1,60 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Algorithm Visualizer</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Algorithm Visualizer — Home</title>
     <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-
     <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="logo">Algorithm Visualizer</div>
-        <ul class="nav-links">
-            <li><a href="#">Sorting</a></li>
-            <li><a href="#">Searching</a></li>
-            <li><a href="#">Graphs</a></li>
-            <li><a href="#">About</a></li>
-        </ul>
-    </nav>
+    <header class="navbar">
+        <div class="nav-inner">
+            <a class="brand" href="index.html">Algorithm Visualizer</a>
 
-    <!-- MAIN CONTAINER -->
-    <div class="container">
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="#visualizer">Visualizer</a>
+                <a href="about.html">About</a>
+                <a href="#" id="themeToggle" class="btn-toggle" title="Toggle dark mode">🌙</a>
+            </nav>
 
-        <h2>Select Algorithm & Visualize</h2>
-
-        <!-- Controls -->
-        <div class="controls">
-
-            <label for="algoSelect">Algorithm</label>
-            <select id="algoSelect" title="Select algorithm">
-                <option value="bubble">Bubble Sort</option>
-                <option value="merge">Merge Sort</option>
-                <option value="quick">Quick Sort</option>
-                <option value="insertion">Insertion Sort</option>
-            </select>
-            <button id="generateBtn" type="button">Generate Array</button>
-            <button id="startBtn" type="button">Start</button>
-            <button id="startBtn">Start</button>
-            <div class="slider-group">
-                <label for="sizeSlider">Size</label>
-                <input type="range" id="sizeSlider" min="10" max="150" value="50" title="Array size" />
-            </div>
-            </div>
-            <div class="slider-group">
-                <label for="speedSlider">Speed</label>
-                <input type="range" id="speedSlider" min="10" max="300" value="150" title="Animation speed" />
-            </div>
-            </div>
-
+            <button class="nav-toggle" id="navToggle" aria-label="toggle menu">☰</button>
         </div>
+    </header>
 
-        <!-- Bars -->
-        <div id="bars"></div>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner container">
+            <div class="hero-text">
+                <h1>Learn Algorithms — Visual & Interactive</h1>
+                <p>Visualize sorting & search algorithms. Adjust speed, size and step through each operation — build
+                    strong DSA intuition.</p>
+                <div class="hero-cta">
+                    <a class="cta" href="#visualizer">Start Visualizing</a>
+                    <a class="cta outline" href="about.html">About Project</a>
+                </div>
+            </div>
 
-    </div>
+            <div class="hero-art">
+                <!-- optional: place an SVG or illustration here -->
+                <div class="glass-card">
+                    <h3>Why visualize?</h3>
+                    <p>Animations reveal inner workings of algorithms — complexity, swaps, and traversal patterns become
+                        obvious.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTROLS + VISUALIZER -->
+    <main class="container" id="visualizer">
+        <section class="controls-card glass">
+            <div class="controls-top">
+                <label for="algoSelect" class="select-label">Algorithm</label>
+                <select id="algoSelect" class="select" aria-label="Algorithm">
+                    <option value="bubble">Bubble Sort</option>
+                    <option value="merge">Merge Sort</option>
+                    <option value="quick">Quick Sort</option>
+                    <option value="insertion">Insertion Sort</option>
+                </select>
+
+                <div class="controls-buttons">
+                    <button id="generateBtn" class="btn primary">Generate Array</button>
+                    <button id="startBtn" class="btn accent">Start</button>
+                </div>
+            </div>
+
+            <div class="controls-bottom">
+                <label class="range-wrap">
+                    <span>Size</span>
+                    <input type="range" id="sizeSlider" min="10" max="150" value="50" />
+                </label>
+
+                <label class="range-wrap">
+                    <span>Speed</span>
+                    <input type="range" id="speedSlider" min="10" max="300" value="150" />
+                </label>
+            </div>
+        </section>
+
+        <section id="bars" class="bars-wrap"></section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>© <span id="year"></span> Algorithm Visualizer — Built with ♥</p>
+            <div class="footer-links">
+                <a href="about.html">About</a>
+            </div>
+        </div>
+    </footer>
 
     <script type="module" src="script.js"></script>
+    <script>
+        // small inline helpers
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
+
 </html>

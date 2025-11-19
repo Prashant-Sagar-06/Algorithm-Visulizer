@@ -1,59 +1,70 @@
-import { sleep, highlight, updateHeight , COLORS } from "./utils/ui.js";
-import { bubbleSort } from "./Algorithms/bubbleSort.js";
-import { mergeSort } from "./Algorithms/mergeSort.js";
+// ================= IMPORTS =================
+import { sleep, highlight, updateHeight, COLORS } from "./utils/ui.js";
+import { bubbleSort } from "./algorithms/bubbleSort.js";
+import { mergeSort } from "./algorithms/mergeSort.js";
+// (Add quickSort, insertionSort later)
 
 
-let array = []; // global array
-let arraySize = 50; // default size
-let speed = 150; // default speed
+// ================= GLOBAL VARIABLES =================
+let array = [];
+let arraySize = 50;
+let speed = 150;
 
-// Select elements
+// UI elements
 const barsContainer = document.getElementById("bars");
 const sizeSlider = document.getElementById("sizeSlider");
 const speedSlider = document.getElementById("speedSlider");
+const generateBtn = document.getElementById("generateBtn");
+const startBtn = document.getElementById("startBtn");
 
-// Generate a new random array
+
+// ================= ARRAY GENERATION =================
 function generateArray(size = arraySize) {
     array = [];
-    barsContainer.innerHTML = ""; // clear old bars
+    barsContainer.innerHTML = "";
 
     for (let i = 0; i < size; i++) {
-        let value = Math.floor(Math.random() * 300) + 10; // bar height
+        let height = Math.floor(Math.random() * 300) + 10;
+        array.push(height);
 
-        array.push(value);
-
-        // Create bar element
         const bar = document.createElement("div");
         bar.classList.add("bar");
-        bar.style.height = `${value}px`;
+        bar.style.height = `${height}px`;
 
         barsContainer.appendChild(bar);
     }
 }
 
-// Handle size change
+
+// ================= SLIDERS =================
 sizeSlider.addEventListener("input", e => {
     arraySize = e.target.value;
     generateArray(arraySize);
 });
 
-// Handle speed change
 speedSlider.addEventListener("input", e => {
-    speed = 310 - e.target.value; // lower = fast, higher = slow
+    speed = 310 - e.target.value;   // faster when slider is high
 });
 
-// Wrapper for sleep with speed
+
+// ================= SLEEP HELPER =================
 async function wait() {
     await sleep(speed);
 }
 
-// Button: Generate Array
-document.getElementById("generateBtn").addEventListener("click", () => {
-    generateArray(arraySize);
-});
 
-// Button: Start Sorting 
-document.getElementById("startBtn").addEventListener("click", async () => {
+// ================= UI FREEZE DURING SORT =================
+function disableUI(state) {
+    generateBtn.disabled = state;
+    startBtn.disabled = state;
+    sizeSlider.disabled = state;
+    speedSlider.disabled = state;
+    document.getElementById("algoSelect").disabled = state;
+}
+
+
+// ================= SORTING LAUNCHER =================
+startBtn.addEventListener("click", async () => {
     const algo = document.getElementById("algoSelect").value;
 
     disableUI(true);
@@ -65,21 +76,76 @@ document.getElementById("startBtn").addEventListener("click", async () => {
         await mergeSort(array, speed);
     }
     else {
-        alert("This algorithm is not implemented yet!");
+        alert("Algorithm not implemented yet!");
     }
-
 
     disableUI(false);
 });
 
-function disableUI(state) {
-    document.getElementById("generateBtn").disabled = state;
-    document.getElementById("startBtn").disabled = state;
-    document.getElementById("sizeSlider").disabled = state;
-    document.getElementById("speedSlider").disabled = state;
-    document.getElementById("algoSelect").disabled = state;
+
+// ================= BUTTON: GENERATE ARRAY =================
+generateBtn.addEventListener("click", () => {
+    generateArray(arraySize);
+});
+
+
+// ================= INITIAL LOAD =================
+generateArray(arraySize);
+
+
+// =========================================================
+//                   NAVBAR (MOBILE) TOGGLE 
+// =========================================================
+const navToggle = document.getElementById("navToggle");
+const navLinks = document.getElementById("navLinks");
+
+if (navToggle && navLinks) {
+    navToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("open");
+    });
+}
+
+// For About Page Navbar (same function)
+const navToggleAbout = document.getElementById("navToggleAbout");
+const navLinksAbout = document.getElementById("navLinksAbout");
+
+if (navToggleAbout && navLinksAbout) {
+    navToggleAbout.addEventListener("click", () => {
+        navLinksAbout.classList.toggle("open");
+    });
 }
 
 
-// Initial load
-generateArray(arraySize);
+// =========================================================
+//                   DARK MODE TOGGLE
+// =========================================================
+const THEME_KEY = "av-theme";
+
+function applyTheme(theme) {
+    if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+    } else {
+        document.documentElement.classList.remove("dark");
+    }
+}
+
+// Load saved theme
+const savedTheme =
+    localStorage.getItem(THEME_KEY) ||
+    (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+applyTheme(savedTheme);
+
+// Toggle dark mode
+const themeToggles = document.querySelectorAll("#themeToggle, #themeToggleAbout, .btn-toggle");
+
+themeToggles.forEach(btn => {
+    btn?.addEventListener("click", e => {
+        e.preventDefault();
+
+        const isDark = document.documentElement.classList.toggle("dark");
+        localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
+
+        themeToggles.forEach(b => (b.textContent = isDark ? "☀️" : "🌙"));
+    });
+});
