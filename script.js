@@ -2,7 +2,10 @@
 import { sleep, highlight, updateHeight, COLORS } from "./utils/ui.js";
 import { bubbleSort } from "./algorithms/bubbleSort.js";
 import { mergeSort } from "./algorithms/mergeSort.js";
-// (Add quickSort, insertionSort later)
+import { quickSort } from "./Algorithms/quickSort.js";
+import { insertionSort } from "./Algorithms/insertionSort.js";
+
+
 
 
 // ================= GLOBAL VARIABLES =================
@@ -68,16 +71,22 @@ startBtn.addEventListener("click", async () => {
     const algo = document.getElementById("algoSelect").value;
 
     disableUI(true);
-
     if (algo === "bubble") {
         await bubbleSort(array, speed);
     }
     else if (algo === "merge") {
         await mergeSort(array, speed);
     }
+    else if (algo === "quick") {
+        await quickSort(array, speed);
+    }
+    else if (algo === "insertion") {
+    await insertionSort(array, speed);
+    }
     else {
         alert("Algorithm not implemented yet!");
     }
+
 
     disableUI(false);
 });
@@ -149,3 +158,4 @@ themeToggles.forEach(btn => {
         themeToggles.forEach(b => (b.textContent = isDark ? "☀️" : "🌙"));
     });
 });
+
